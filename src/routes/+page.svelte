@@ -16,7 +16,6 @@
         <FeatureCard icon="i-solar-command-bold-duotone" on:click={() => $showMenu = true} title="试试快捷菜单" description="按 Ctrl/Cmd + K 打开" />
         <FeatureCard icon="i-hugeicons-package-search" href="/pypi" title="探索 PyPI" description="搜索 PyPI 上的包" />
         <FeatureCard icon="i-mdi-github-face" href="/github" title="打开一个 GitHub 仓库" description="从指定的 GitHub 仓库打开一个工作区" />
-        <FeatureCard icon="i-lucide-folder-dot" href="/playground" title="看看本站源码" description="本站的 Python 代码" />
       </div>
     </div>
   </div>
