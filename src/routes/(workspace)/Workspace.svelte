@@ -10,7 +10,10 @@
   export let sources: Record<string, string> = {};
 
   function getDefaultFile() {
-    return Object.keys(sources).find(name => name.toUpperCase().startsWith("README")) ?? Object.keys(sources)[0];
+    const readmeFiles = Object.keys(sources).filter(name => name.toUpperCase().includes("README"));
+    if (readmeFiles.length === 0)
+      return Object.keys(sources)[0];
+    return readmeFiles.reduce((longest, current) => sources[current].length > sources[longest].length ? current : longest, readmeFiles[0]);
   }
 
   let focusedFile: keyof typeof sources = getDefaultFile();
