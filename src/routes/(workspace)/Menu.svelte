@@ -6,7 +6,7 @@
   import Item from "./MenuItem.svelte";
   import { sources } from "./store";
   import { telegraphToken } from "./telegraph/store";
-  import { pushState } from "$app/navigation";
+  import { goto } from "$app/navigation";
   import { page } from "$app/stores";
   import { forkWorkspace, updateWorkspace } from "$lib/cms/telegraph";
   import { input } from "$lib/components/Input.svelte";
@@ -15,9 +15,11 @@
   async function share() {
     const [title, author] = await Promise.all([input("标题"), input("作者")]);
     const payload: WorkspaceInfo = { sources: $sources, title, author };
-    const { path, token } = await withProgress(forkWorkspace(payload, $telegraphToken));
-    pushState(`/telegraph/${path}`, $page.state);
-    token && telegraphToken.set(token);
+    await withProgress((async () => {
+      const { path, token } = await forkWorkspace(payload, $telegraphToken);
+      token && telegraphToken.set(token);
+      await goto(`/telegraph/${path}`);
+    })());
   }
 
   async function update() {
@@ -25,6 +27,7 @@
     await withProgress(updateWorkspace({ title, author, sources: $sources, token: $telegraphToken! }));
   }
 
+  $: canUpdate = $telegraphToken && $page.route.id === "/(workspace)/telegraph/[path]";
 </script>
 
 <Menubar.Root class="h-full flex flex-row items-center">
@@ -37,7 +40,7 @@
   </button>
 
   <Group title="项目">
-    <Item icon="i-carbon-save -translate-y-0.2" on:click={update}>保存（更新）</Item>
+    <Item icon="i-carbon-save -translate-y-0.2" on:click={update} disabled={!canUpdate}>保存（更新）</Item>
     <Item icon="i-carbon-share" on:click={share}>分支（另存为）</Item>
   </Group>
 
