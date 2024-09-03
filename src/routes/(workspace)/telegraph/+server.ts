@@ -18,9 +18,12 @@ export const PUT: RequestHandler = async ({ request, url }) => {
 
   const content = serialize(sources);
 
-  const { path } = await client.createPage(pageTitle, content, name, "https://py3.online");
-
-  client.editPage(path, pageTitle, content, name, new URL(`/telegraph/${path}`, url).href).catch(console.error);
-
-  return json({ path, token }, { status: 201 });
+  try {
+    const { path } = await client.createPage(pageTitle, content, name, "https://py3.online");
+    client.editPage(path, pageTitle, content, name, new URL(`/telegraph/${path}`, url).href).catch(console.error);
+    return json({ path, token }, { status: 201 });
+  }
+  catch (e) {
+    return json({ error: (e as Error).message }, { status: 400 });
+  }
 };

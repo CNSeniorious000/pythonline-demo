@@ -6,14 +6,14 @@
   import { sources } from "./store";
   import { pushState } from "$app/navigation";
   import { page } from "$app/stores";
-  import { saveWorkspace } from "$lib/cms/telegraph";
+  import { forkWorkspace } from "$lib/cms/telegraph";
   import { input } from "$lib/components/Input.svelte";
   import { Menubar } from "bits-ui";
 
   async function share() {
     const [title, author] = await Promise.all([input("标题"), input("作者")]);
     const payload: WorkspaceInfo = { sources: $sources, title, author };
-    const res = await saveWorkspace(payload);
+    const res = await forkWorkspace(payload);
     pushState(`/telegraph/${res.path}`, $page.state);
   }
 

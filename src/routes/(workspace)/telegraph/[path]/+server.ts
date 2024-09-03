@@ -16,7 +16,11 @@ export const PUT: RequestHandler = async ({ request, params: { path } }) => {
 
   const content = serialize(sources);
 
-  await client.editPage(path, title, content, author, request.url);
-
-  return text("", { status: 204 });
+  try {
+    await client.editPage(path, title, content, author, request.url);
+    return text("", { status: 204 });
+  }
+  catch (e) {
+    return text((e as Error).message, { status: 400 });
+  }
 };
