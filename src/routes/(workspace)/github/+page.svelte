@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { showEditor } from "../store";
   import literalDictExample from "./literal-dict.example.txt?raw";
   import { beforeNavigate } from "$app/navigation";
   import Intro from "$lib/components/Intro.svelte";
@@ -7,6 +8,8 @@
 
   let input = "";
   let ref: HTMLInputElement;
+
+  $showEditor = false;
 
   $: valid = input.split("/").length === 2 && !input.endsWith("/") && !input.startsWith("/");
 

@@ -27,7 +27,7 @@
   })));
 </script>
 
-<div class="h-screen">
+<div class="h-full">
   <PaneGroup direction="horizontal">
     <Pane defaultSize={20} minSize={10}>
       <FileList files={Object.keys(sources).toSorted()} bind:focusedFile />
