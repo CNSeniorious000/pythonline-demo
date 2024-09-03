@@ -60,18 +60,16 @@ def patch_console():
 def patch_input():
     from pyodide.ffi import can_run_sync, run_sync
 
-    if can_run_sync():
-        if TYPE_CHECKING:
-            from stub import async_input
-        else:
-            from __main__ import async_input
+    def input(prompt=""):
+        if can_run_sync():
+            if TYPE_CHECKING:
+                from stub import async_input
+            else:
+                from __main__ import async_input
 
-        def input(prompt=""):
             return run_sync(async_input(str(prompt)))
 
-    else:
-
-        def input(prompt=""):
+        else:
             return window.prompt(str(prompt)) or ""
 
     builtins.input = input
