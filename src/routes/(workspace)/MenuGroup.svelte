@@ -7,10 +7,12 @@
 </script>
 
 <Menubar.Menu bind:open>
-  <Menubar.Trigger class="h-full px-2 text-0.8rem text-neutral-3 hover:(bg-neutral-8 text-neutral-2)">
-    <div class="translate-y-0.25">
-      {title}
-    </div>
+  <Menubar.Trigger asChild let:builder>
+    <button class="h-full px-2 text-0.8rem text-neutral-3 hover:(bg-neutral-8 text-neutral-2)" {...builder} use:builder.action>
+      <div class="translate-y-0.25">
+        {title}
+      </div>
+    </button>
   </Menubar.Trigger>
   <Menubar.Content class="min-w-50 flex flex-col rounded rounded-lt-0 bg-neutral-8 p-1 text-0.8rem text-neutral-3" align="start">
     <slot />
@@ -18,7 +20,7 @@
 </Menubar.Menu>
 
 <style>
-  :global([data-state="open"]) {
+  button:global([data-state="open"]) {
     --uno: bg-neutral-8 text-neutral-2;
   }
 </style>
