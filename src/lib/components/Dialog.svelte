@@ -45,9 +45,11 @@
 
           </section>
 
-          <Dialog.Description class="<sm:text-sm">
-            {message}
-          </Dialog.Description>
+          {#if message}
+            <Dialog.Description class="<sm:text-sm">
+              {message}
+            </Dialog.Description>
+          {/if}
 
           <input bind:this={ref} on:keydown={({ key }) => key === "Enter" && (open = false)} placeholder={message} class="mt-1 w-full rounded-sm bg-transparent px-2 py-1.5 text-sky-50 outline-none ring-1.3 ring-white/10 <sm:text-sm focus:ring-white/40 placeholder-neutral-5" bind:value type="text">
 
