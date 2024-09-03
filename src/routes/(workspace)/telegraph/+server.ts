@@ -14,14 +14,16 @@ export const PUT: RequestHandler = async ({ request, url }) => {
 
   const { sources, title, author, token } = info;
 
-  const client = new Telegraph(token ?? (await anonymousClient.createAccount(info.author)).access_token!);
+  let new_token: string | undefined;
+
+  const client = new Telegraph((token ?? (new_token = (await anonymousClient.createAccount(info.author)).access_token))!);
 
   const content = serialize(sources);
 
   try {
     const { path } = await client.createPage(title, content, author, "https://py3.online");
     client.editPage(path, title, content, author, new URL(`/telegraph/${path}`, url).href).catch(console.error);
-    return json({ path, token }, { status: 201 });
+    return json({ path, token: new_token }, { status: 201 });
   }
   catch (e) {
     return json({ error: (e as Error).message }, { status: 400 });
