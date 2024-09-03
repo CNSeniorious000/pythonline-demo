@@ -1,4 +1,6 @@
 # Introducing Pythonline
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FCNSeniorious000%2Fbnu-pythonline.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FCNSeniorious000%2Fbnu-pythonline?ref=badge_shield)
+
 
 Pythonline is a Python interpreter that runs in your browser. It is based on the [Pyodide](https://github.com/pyodide/pyodide) project, which is a WASM build of CPython.
 
@@ -79,3 +81,7 @@ await gather(*(f(".") for _ in range(10)))
 - This project is heavily inspired by [StackBlitz](https://stackblitz.com/), [CodePen](https://codepen.io/) and [Marimo](https://github.com/marimo-team/marimo)
 - Developers from [pyodide](https://github.com/pyodide) helped me a lot
 - There are some other similar projects like [futurecoder](https://futurecoder.io/), [JupyterLite](https://jupyterlite.github.io/demo) and [PyScript](https://pyscript.com/)
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FCNSeniorious000%2Fbnu-pythonline.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FCNSeniorious000%2Fbnu-pythonline?ref=badge_large)
