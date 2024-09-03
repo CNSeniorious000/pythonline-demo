@@ -18,7 +18,7 @@ export const PUT: RequestHandler = async ({ request, params: { path } }) => {
 
   try {
     await client.editPage(path, title, content, author, request.url);
-    return text("", { status: 204 });
+    return new Response(null, { status: 204 });
   }
   catch (e) {
     return text((e as Error).message, { status: 400 });
