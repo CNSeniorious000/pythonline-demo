@@ -2,6 +2,7 @@ import builtins
 from functools import cache, wraps
 from inspect import Signature, getsource
 from os import getenv
+from typing import TYPE_CHECKING
 
 import micropip
 from js import window
@@ -57,8 +58,21 @@ def patch_console():
 
 @cache
 def patch_input():
-    def input(prompt=""):
-        return window.prompt(str(prompt)) or ""
+    from pyodide.ffi import can_run_sync, run_sync
+
+    if can_run_sync():
+        if TYPE_CHECKING:
+            from stub import async_input
+        else:
+            from __main__ import async_input
+
+        def input(prompt=""):
+            return run_sync(async_input(str(prompt)))
+
+    else:
+
+        def input(prompt=""):
+            return window.prompt(str(prompt)) or ""
 
     builtins.input = input
 

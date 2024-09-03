@@ -8,6 +8,7 @@
   import { page } from "$app/stores";
   import * as env from "$env/static/public";
   import CmdK from "$lib/components/command/CmdK.svelte";
+  import Inputer from "$lib/components/Input.svelte";
   import { Toaster } from "svelte-sonner";
 
   // @ts-ignore
@@ -45,6 +46,8 @@
 </svelte:head>
 
 <Toaster theme="dark" toastOptions={{ class: "text-xs font-mono" }} />
+
+<Inputer />
 
 <slot />
 
