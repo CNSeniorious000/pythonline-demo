@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { WorkspaceInfo } from "$lib/cms/types";
 
+  import { withProgress } from "./+layout.svelte";
   import Group from "./MenuGroup.svelte";
   import Item from "./MenuItem.svelte";
   import { sources } from "./store";
@@ -14,14 +15,14 @@
   async function share() {
     const [title, author] = await Promise.all([input("标题"), input("作者")]);
     const payload: WorkspaceInfo = { sources: $sources, title, author };
-    const { path, token } = await forkWorkspace(payload, $telegraphToken);
+    const { path, token } = await withProgress(forkWorkspace(payload, $telegraphToken));
     pushState(`/telegraph/${path}`, $page.state);
     token && telegraphToken.set(token);
   }
 
   async function update() {
     const [title, author] = await Promise.all([input("标题"), input("作者")]);
-    await updateWorkspace({ title, author, sources: $sources, token: $telegraphToken! });
+    await withProgress(updateWorkspace({ title, author, sources: $sources, token: $telegraphToken! }));
   }
 
 </script>
