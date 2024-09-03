@@ -23,8 +23,8 @@
   }
 </script>
 
-<Dialog.Root bind:open portal={null} closeOnEscape={false} closeOnOutsideClick={false}>
-  <div on:focusin={() => ref.focus()} style:z-index={++count} class="pointer-events-none fixed left-0 right-0 top-30vh grid place-items-center text-neutral-2 [&>*]:pointer-events-auto">
+<Dialog.Root openFocus={() => ref} bind:open portal={null} closeOnEscape={false} closeOnOutsideClick={false}>
+  <div style:z-index={++count} class="pointer-events-none fixed left-0 right-0 top-30vh grid place-items-center text-neutral-2 [&>*]:pointer-events-auto">
 
     <Dialog.Overlay asChild let:builder>
       <div transition:fade|global={{ duration: 400, easing: cubicOut }} class="fixed inset-0 bg-black/10 duration-250" {...builder} use:builder.action />
@@ -45,13 +45,14 @@
 
           </section>
 
-          {#if message}
+          {#if message !== undefined}
             <Dialog.Description class="<sm:text-sm">
               {message}
             </Dialog.Description>
           {/if}
 
-          <input bind:this={ref} on:keydown={({ key }) => key === "Enter" && (open = false)} placeholder={message} class="mt-1 w-full rounded-sm bg-transparent px-2 py-1.5 text-sky-50 outline-none ring-1.3 ring-white/10 <sm:text-sm focus:ring-white/40 placeholder-neutral-5" bind:value type="text">
+          <!-- svelte-ignore a11y-positive-tabindex -->
+          <input tabindex="1" bind:this={ref} on:keydown={({ key }) => key === "Enter" && (open = false)} placeholder={message} class="mt-1 w-full rounded-sm bg-transparent px-2 py-1.5 text-sky-50 outline-none ring-1.3 ring-white/10 <sm:text-sm focus:ring-white/40 placeholder-neutral-5" bind:value type="text">
 
         </div>
       </div>

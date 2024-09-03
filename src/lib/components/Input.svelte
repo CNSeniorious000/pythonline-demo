@@ -12,7 +12,7 @@
 
   const tasks = writable<Task[]>([]);
 
-  export function input(prompt = "") {
+  export function input(prompt: any) {
     return new Promise<string>((resolve) => {
       tasks.update(($tasks) => {
         $tasks.push({ prompt, resolve, id: nonce++ });
