@@ -13,12 +13,12 @@ type TelegraphResponse<T> = {
   error: string;
 };
 
-export async function forkWorkspace(info: WorkspaceInfo) {
+export async function forkWorkspace(info: WorkspaceInfo, token?: string) {
   const id = toastMarkdown("正在创建新的工作区", "loading");
-  const res = await fetch("/telegraph", { method: "PUT", body: JSON.stringify(info) });
+  const res = await fetch("/telegraph", { method: "PUT", body: JSON.stringify({ ...info, token }) });
 
   if (res.ok) {
-    const result: { path: string; token: string } = await res.json();
+    const result: { path: string; token?: string } = await res.json();
     toastMarkdown(`成功创建 \`${result.path}\``, "success", id);
     return result;
   }
@@ -29,12 +29,13 @@ export async function forkWorkspace(info: WorkspaceInfo) {
 
 export async function updateWorkspace(payload: Payload) {
   const id = toastMarkdown("正在保存工作区", "loading");
-  const res = await fetch(".", { method: "PUT", body: JSON.stringify(payload) });
+  const res = await fetch("", { method: "PUT", body: JSON.stringify(payload) });
   if (!res.ok) {
     const error = await res.text();
     toastMarkdown(`保存失败 \`${error}\``, "warning", id);
     throw new Error(error);
   }
+  toastMarkdown("保存成功", "success", id);
 }
 
 export async function loadWorkspace(path: string): Promise<WorkspaceInfo> {
