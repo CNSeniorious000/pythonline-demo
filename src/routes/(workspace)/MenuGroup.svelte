@@ -14,7 +14,7 @@
       </div>
     </button>
   </Menubar.Trigger>
-  <Menubar.Content class="min-w-50 flex flex-col rounded rounded-lt-0 bg-neutral-8 p-1 text-0.8rem text-neutral-3" align="start">
+  <Menubar.Content class="min-w-50 flex flex-col rounded rounded-lt-0 bg-neutral-8 p-1 text-0.8rem text-neutral-3 shadow-md" align="start">
     <slot />
   </Menubar.Content>
 </Menubar.Menu>

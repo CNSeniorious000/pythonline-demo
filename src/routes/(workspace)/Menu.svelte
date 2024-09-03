@@ -37,8 +37,8 @@
   </button>
 
   <Group title="项目">
-    <Item on:click={update}>保存（更新）</Item>
-    <Item on:click={share}>分支（另存为）</Item>
+    <Item icon="i-carbon-save -translate-y-0.2" on:click={update}>保存（更新）</Item>
+    <Item icon="i-carbon-share" on:click={share}>分支（另存为）</Item>
   </Group>
 
 </Menubar.Root>
