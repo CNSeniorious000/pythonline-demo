@@ -77,4 +77,8 @@
   :global(body *)::-webkit-scrollbar {
     --uno: hidden;
   }
+
+  :global(*:not(input):focus-visible) {
+    --uno: outline-none ring-(1.2 neutral-5);
+  }
 </style>
