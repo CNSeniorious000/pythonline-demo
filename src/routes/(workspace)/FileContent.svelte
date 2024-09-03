@@ -19,7 +19,7 @@
 </script>
 
 <PaneGroup direction="horizontal" class="h-full w-full">
-  <Pane minSize={15}>
+  <Pane minSize={15} class="relative">
     <Editor on:save lang={getLanguage(lang)} showLineNum bind:source={content} />
   </Pane>
   {#if lang === "md"}
