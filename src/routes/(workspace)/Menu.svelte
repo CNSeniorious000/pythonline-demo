@@ -27,9 +27,14 @@
 
 </script>
 
-<Menubar.Root class="h-full flex flex-row items-center text-sm text-neutral-3 !z-1000000000">
+<Menubar.Root class="h-full flex flex-row items-center">
 
-  <div class="i-mdi-language-python ml-2 mr-1.5 text-base" />
+  <button on:click={() => history.back()} class="group z-1 h-full text-neutral-3 [&:active>div>div]:(scale-80 duration-100) hover:(bg-neutral-8 text-neutral-2)">
+    <div class="pointer-events-none relative mx-2 aspect-1 h-1/2 [&>div]:(absolute inset-0 h-full w-full transition duration-250 ease-out)">
+      <div class="i-mdi-language-python group-hover:(op-0 -translate-x-1.5)" />
+      <div class="i-iconamoon-arrow-left-1-bold group-not-hover:(translate-x-1.5 op-0)" />
+    </div>
+  </button>
 
   <Group title="项目">
     <Item on:click={update}>保存（更新）</Item>
