@@ -69,4 +69,19 @@
     <Item icon="i-carbon-share" on:click={share}>分支（另存为）</Item>
   </Group>
 
+  <Group title="导航">
+    <Item icon="i-carbon-home -translate-y-0.2" on:click={() => goto("/")}>首页</Item>
+    <Item icon="i-carbon-repo-source-code" on:click={() => goto("/playground")}>本站 Python 代码</Item>
+    <Menubar.Separator class="my-1 h-1px w-full rounded-full bg-neutral-7" />
+    <Item icon="i-carbon-link" on:click={() => open("https://py3.online/")}>英文站（较久）</Item>
+    <Item icon="i-carbon-logo-github" on:click={() => open("https://github.com/promplate/pyth-on-line")}>开源仓库</Item>
+    <Item icon="i-carbon-ai-results-urgent" on:click={() => open("https://github.com/promplate/pyth-on-line/discussions")}>问题反馈</Item>
+    <Item icon="i-carbon-feature-membership-filled" on:click={() => open("https://github.com/promplate/pyth-on-line/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22")}>参与贡献</Item>
+    <Item icon="i-carbon-logo-github" on:click={() => open("https://github.com/pyodide/pyodide")}>Pyodide 开源仓库</Item>
+    <Item icon="i-carbon-logo-github" on:click={() => open("https://github.com/promplate/core")}>Promplate 开源仓库</Item>
+    <Item icon="i-carbon-information-square-filled" on:click={() => open("https://docs.py.promplate.dev/")}>Promplate 文档</Item>
+    <Item icon="i-carbon-interactive-segmentation-cursor" on:click={() => open("https://promplate.dev/")}>Promplate 交互式文档</Item>
+    <Item icon="i-carbon-interactive-segmentation-cursor" on:click={() => open("https://zh.promplate.dev/")}>Promplate 中文交互式文档</Item>
+  </Group>
+
 </Menubar.Root>
