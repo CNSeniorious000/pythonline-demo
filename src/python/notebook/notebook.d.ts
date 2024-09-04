@@ -12,4 +12,5 @@ export class NotebookAPI extends PyProxy {
   async run(source: string, sync: Callback, console = false): Promise<void>;
   inspect(source: string): Inspection;
   is_python(source: string): boolean;
+  inject_globals(context: PyProxy): void;
 }

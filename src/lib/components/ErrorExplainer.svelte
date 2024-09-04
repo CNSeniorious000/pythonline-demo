@@ -1,7 +1,5 @@
 <script lang="ts">
-  import type { ConsoleAPI } from "$py/console/console";
-
-  import Markdown from "./chat/Markdown.svelte";
+  import Notebook from "./notebook/Notebook.svelte";
   import WithTooltip from "./reusable/WithTooltip.svelte";
   import { draggable } from "@neodrag/svelte";
   import { explain } from "$lib/pyodide/api/explain";
@@ -12,8 +10,6 @@
   interface ErrorInfo { traceback: string; code: string }
 
   export let errorInfo: ErrorInfo | undefined;
-  export let pushBlock: (source: string) => any;
-  export let pyConsole: ConsoleAPI;
   export let close: () => any;
 
   let output = "";
@@ -72,7 +68,7 @@
       {/if}
       {#if output}
         <div class="overflow-y-scroll pb-2.5 lg:pb-3.5 sm:pb-3 [&>article]:(<sm:text-xs lg:text-base)">
-          <Markdown text={output} runCode={pushBlock} inspect={pyConsole.inspect} />
+          <Notebook text={output} />
         </div>
       {/if}
     </div>

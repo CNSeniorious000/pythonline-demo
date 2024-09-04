@@ -39,3 +39,6 @@ class NotebookAPI:
             parse(source)
             return True
         return False
+
+    def inject_globals(self, context):
+        self.context = {**context, **self.context}

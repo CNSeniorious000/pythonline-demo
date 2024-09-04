@@ -234,7 +234,7 @@
 
 {#await import("./ErrorExplainer.svelte") then { default: ErrorExplainer }}
   <Modal let:close show={!!focusedError} cleanup={() => focusedError = undefined}>
-    <ErrorExplainer errorInfo={focusedError} {close} {pushBlock} {pyConsole} />
+    <ErrorExplainer errorInfo={focusedError} {close} />
   </Modal>
 {/await}
 

@@ -32,7 +32,7 @@
         </WithTooltip>
       {/if}
       {#if runnable && $currentConsolePush}
-        <WithTooltip let:builder tips="运行">
+        <WithTooltip let:builder tips="在终端中运行">
           <button on:click={() => {
             const source = code.value.trimEnd();
             if (source.split("\n").at(-1)?.startsWith(" "))
