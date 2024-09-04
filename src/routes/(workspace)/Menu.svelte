@@ -15,8 +15,10 @@
 
   async function newFile() {
     const path = await input("文件路径");
-    $sources = { ...$sources, [path]: "" };
-    $focusedFile = path;
+    if (path) {
+      $sources = { ...$sources, [path]: "" };
+      $focusedFile = path;
+    }
   }
 
   async function share() {

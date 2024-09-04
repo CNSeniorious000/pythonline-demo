@@ -1,7 +1,7 @@
 <script context="module" lang="ts">
   import { writable } from "svelte/store";
 
-  export const focusedFile = writable<string >();
+  export const focusedFile = writable<string | undefined>();
 </script>
 
 <script lang="ts">
@@ -31,6 +31,10 @@
       $focusedFile = name;
     },
   })));
+
+  $: if ($focusedFile && !($focusedFile in sources)) {
+    $focusedFile = undefined;
+  }
 </script>
 
 <div class="h-full">
@@ -47,6 +51,7 @@
           <Pane defaultSize={70} minSize={10} class="relative">
             {#if $focusedFile}
               <FileContent on:save={({ detail: content }) => {
+                // @ts-ignore
                 save($focusedFile, content.replaceAll("\r\n", "\n"));
                 toastMarkdown(`\`${$focusedFile}\` 已保存`);
               }} bind:content={sources[$focusedFile]} lang={$focusedFile.slice($focusedFile.lastIndexOf(".") + 1)} />
