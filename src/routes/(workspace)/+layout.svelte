@@ -76,7 +76,7 @@
     const [total, finished] = $tasks;
 
     if (total === 1 && finished === 0) {
-      reset();
+      reset?.();
       progress.set(0.25);
       show = true;
     }
