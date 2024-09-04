@@ -14,10 +14,19 @@
   import { Menubar } from "bits-ui";
 
   async function newFile() {
-    const path = await input("文件路径");
+    const path = await input("文件路径，例如 a/b/c.py");
     if (path) {
       $sources = { ...$sources, [path]: "" };
       $focusedFile = path;
+    }
+  }
+
+  async function newModule(folder = false) {
+    const path = await input("模块路径，例如 a.b.c");
+    if (path) {
+      const target = folder ? `${path.replace(/\./g, "/")}/__init__.py` : `${path.replace(/\./g, "/")}.py`;
+      $sources = { ...$sources, [target]: "" };
+      $focusedFile = target;
     }
   }
 
@@ -50,6 +59,9 @@
 
   <Group title="文件">
     <Item icon="i-carbon-document-add -translate-y-0.2" on:click={newFile}>新建文件</Item>
+    <Menubar.Separator class="my-1 h-1px w-full rounded-full bg-neutral-7" />
+    <Item icon="i-carbon-new-tab" on:click={() => newModule(true)}>新建 py 模块（文件夹）</Item>
+    <Item icon="i-carbon-new-tab" on:click={() => newModule()}>新建 py 模块（文件）</Item>
   </Group>
 
   <Group title="项目">
