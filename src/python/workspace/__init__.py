@@ -42,13 +42,18 @@ class WorkspaceAPI:
 
         if reload:
             for path, content in sources.items():
-                if Path(base, path).read_text() != content:
+                file = Path(base, path)
+                if file.exists() and file.read_text() != content:
                     unload(path2module(path))
 
         setup_module(sources, base_path=Path(base))
 
     def save(self, path: str, content: str, reload=True):
         file = Path(self.directory.name, path)
+        if not file.exists():
+            file.write_text(content)
+            return
+
         if file.read_text() != content:
             if reload:
                 unload(path2module(path))
