@@ -95,8 +95,8 @@
     <Item icon="i-carbon-save -translate-y-0.2" on:click={() => withProgress(update())} disabled={!canUpdate}>保存（更新）</Item>
     <Item icon="i-carbon-share" on:click={share}>分支（另存为）</Item>
     <Menubar.Separator class="my-1 h-1px w-full rounded-full bg-neutral-7" />
-    <Item icon="i-carbon-pen-fountain" on:click={() => withProgress(update(false, true))}>修改作者</Item>
-    <Item icon="i-carbon-pen" on:click={() => withProgress(update(true, false))}>修改标题</Item>
+    <Item icon="i-carbon-pen-fountain" on:click={() => withProgress(update(false, true))} disabled={!canUpdate}>修改作者</Item>
+    <Item icon="i-carbon-pen" on:click={() => withProgress(update(true, false))} disabled={!canUpdate}>修改标题</Item>
   </Group>
 
   <Group title="导航">
