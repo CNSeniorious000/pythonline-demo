@@ -107,7 +107,7 @@
   </div>
 {/if}
 
-<div class="absolute top-0 w-full [&>div]:transition-opacity [&_*]:!rounded-none" class:translate-y-7={$showEditor}>
+<div class="absolute top-0 z-1 w-full [&>div]:transition-opacity [&_*]:!rounded-none" class:translate-y-7={$showEditor}>
   <Progress {show} bind:progress bind:reset />
 </div>
 
