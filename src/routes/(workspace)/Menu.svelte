@@ -7,7 +7,7 @@
   import { sources } from "./store";
   import { recents, telegraphToken } from "./telegraph/store";
   import { focusedFile } from "./Workspace.svelte";
-  import { goto } from "$app/navigation";
+  import { goto, invalidateAll } from "$app/navigation";
   import { page } from "$app/stores";
   import { forkWorkspace, updateWorkspace } from "$lib/cms/telegraph";
   import { input } from "$lib/components/Input.svelte";
@@ -44,12 +44,14 @@
     })());
   }
 
-  async function update() {
-    const { title, author } = metadata;
+  async function update(updateTitle = false, updateUser = false) {
+    const title = updateTitle ? await input("标题", metadata.title) ?? metadata.title : metadata.title;
+    const author = updateUser ? await input("作者", metadata.author) ?? metadata.author : metadata.author;
     await withProgress(updateWorkspace({ title, author, sources: $sources, token: $telegraphToken! }));
+    await withProgress(invalidateAll());
   }
 
-  $: canUpdate = $telegraphToken && $page.route.id === "/(workspace)/telegraph/[path]" && metadata.own;
+  $: canUpdate = $telegraphToken && $page.route.id === "/(workspace)/telegraph/[path]" && metadata?.own;
 </script>
 
 <Menubar.Root class="h-full flex flex-row items-center">
@@ -69,8 +71,11 @@
   </Group>
 
   <Group title="项目">
-    <Item icon="i-carbon-save -translate-y-0.2" on:click={update} disabled={!canUpdate}>保存（更新）</Item>
+    <Item icon="i-carbon-save -translate-y-0.2" on:click={() => withProgress(update())} disabled={!canUpdate}>保存（更新）</Item>
     <Item icon="i-carbon-share" on:click={share}>分支（另存为）</Item>
+    <Menubar.Separator class="my-1 h-1px w-full rounded-full bg-neutral-7" />
+    <Item icon="i-carbon-pen-fountain" on:click={() => withProgress(update(false, true))}>修改作者</Item>
+    <Item icon="i-carbon-pen" on:click={() => withProgress(update(true, false))}>修改标题</Item>
   </Group>
 
   <Group title="导航">

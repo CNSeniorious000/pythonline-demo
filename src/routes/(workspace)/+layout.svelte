@@ -89,6 +89,7 @@
       show = false;
     }
     else {
+      show = true;
       progress.set((ONE_THIRD + finished) / (ONE_THIRD + total), { soft: 1 });
     }
   }
