@@ -11,9 +11,9 @@
   export let open: boolean;
   export let title: string;
   export let message: string;
-  export let callback: (value: string | null) => any;
+  export let callback: (value: string | undefined) => any;
 
-  export let value: string | null = "";
+  export let value: string | undefined = "";
 
   let ref: HTMLInputElement;
 
@@ -39,7 +39,7 @@
               {title}
             </Dialog.Title>
 
-            <button on:click={() => [(value = null), (open = false)]} title="取消" class="rounded-md border-none p-1.5 transition ease-out -m-1.5 active:scale-90 focus-visible:(bg-red-3/10 text-red-3 outline-none ring-1.3 ring-red-3/50) hover:(bg-red-3/10 text-red-3/80)">
+            <button on:click={() => [(value = undefined), (open = false)]} title="取消" class="rounded-md border-none p-1.5 transition ease-out -m-1.5 active:scale-90 focus-visible:(bg-red-3/10 text-red-3 outline-none ring-1.3 ring-red-3/50) hover:(bg-red-3/10 text-red-3/80)">
               <div class="i-material-symbols-close-rounded" />
             </button>
 

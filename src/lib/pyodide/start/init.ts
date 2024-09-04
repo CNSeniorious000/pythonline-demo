@@ -14,7 +14,7 @@ const getMinimalPyodide = cacheSingleton(withToast({ loading: "加载 Pyodide �
   const { loadPyodide } = await import("pyodide");
   const py = await loadPyodide({ indexURL, env: getEnv(), packages: preloadPackages, args: dev ? [] : ["-O"] });
   py.globals.set("toast", toast);
-  py.globals.set("async_input", input);
+  py.globals.set("async_input", (prompt: string) => input(prompt) ?? "");
   return py;
 }));
 

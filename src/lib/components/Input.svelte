@@ -7,13 +7,13 @@
   interface Task {
     id: number;
     prompt: string;
-    resolve: (value: string) => any;
+    resolve: (value: string | undefined) => any;
   }
 
   const tasks = writable<Task[]>([]);
 
   export function input(prompt: any) {
-    return new Promise<string>((resolve) => {
+    return new Promise<string | undefined>((resolve) => {
       tasks.update(($tasks) => {
         $tasks.push({ prompt, resolve, id: nonce++ });
         return $tasks;
@@ -24,7 +24,7 @@
 
 {#each $tasks as { prompt, resolve, id } (id)}
   <Dialog open message={prompt} title="输入" callback={(value) => {
-    resolve(value ?? "");
+    resolve(value);
     $tasks = $tasks.filter(task => task.id !== id);
   }} />
 {/each}
