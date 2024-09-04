@@ -5,29 +5,44 @@
 
   let progress: Spring<number>;
   let reset: () => any;
-  const show = writable(false);
+  const tasks = writable<[number, number]>([0, 0]);
 
-  function start() {
-    reset();
-    show.set(true);
-    progress.set(0.25);
+  const ONE_THIRD = 1 / 3;
+
+  function addTask() {
+    tasks.update(([total, finished]) => {
+      total++;
+      return [total, finished];
+    });
   }
 
-  function end() {
-    progress.set(2, { soft: 1 });
-    show.set(false);
+  function finish() {
+    tasks.update(([total, finished]) => {
+      finished++;
+      if (total === finished) {
+        progress.set(2, { soft: true });
+        return [0, 0];
+      }
+      return [total, finished];
+    });
   }
 
   function cancel() {
-    progress.set(0);
-    show.set(false);
+    tasks.update(([total, finished]) => {
+      total--;
+      if (total === finished) {
+        progress.set(0);
+        return [0, 0];
+      }
+      return [total, finished];
+    });
   }
 
   export async function withProgress<T>(promise: Promise<T>) {
-    start();
+    addTask();
     try {
       const res = await promise;
-      end();
+      finish();
       return res;
     }
     catch (e) {
@@ -37,7 +52,7 @@
   }
 </script>
 
-<script>
+<script lang="ts">
   import Menu from "./Menu.svelte";
   import { showEditor, sources } from "./store";
   import Workspace from "./Workspace.svelte";
@@ -47,13 +62,32 @@
   import { cubicOut } from "svelte/easing";
   import { fade, fly } from "svelte/transition";
 
-  beforeNavigate(start);
-  afterNavigate(end);
+  beforeNavigate(addTask);
+  afterNavigate(finish);
 
   onDestroy(() => {
     // @ts-ignore
     reset = undefined;
   });
+
+  let show: boolean;
+
+  $: {
+    const [total, finished] = $tasks;
+
+    if (total === 1 && finished === 0) {
+      reset();
+      progress.set(0.25);
+      show = true;
+    }
+    else if (total === finished) {
+      show = false;
+    }
+    else {
+      progress.set((ONE_THIRD + finished) / (ONE_THIRD + total), { soft: 1 });
+    }
+  }
+
 </script>
 
 <slot />
@@ -69,7 +103,7 @@
 {/if}
 
 <div class="absolute top-0 w-full [&>div]:transition-opacity [&_*]:!rounded-none" class:translate-y-7={$showEditor}>
-  <Progress bind:show={$show} bind:progress bind:reset />
+  <Progress {show} bind:progress bind:reset />
 </div>
 
 <style>
