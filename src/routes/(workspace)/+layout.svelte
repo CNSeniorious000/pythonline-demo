@@ -19,7 +19,7 @@
   function finish() {
     tasks.update(([total, finished]) => {
       finished++;
-      if (total === finished) {
+      if (total <= finished) {
         progress.set(2, { soft: true });
         return [0, 0];
       }
@@ -88,6 +88,8 @@
     }
   }
 
+  $: console.log({ show });
+  $: console.log($tasks);
 </script>
 
 <slot />
