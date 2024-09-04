@@ -1,6 +1,7 @@
 <script context="module" lang="ts">
   import type { Spring } from "svelte/motion";
 
+  import Drop from "./Drop.svelte";
   import { writable } from "svelte/store";
 
   let progress: Spring<number>;
@@ -110,6 +111,8 @@
 <div class="absolute top-0 z-1 w-full [&>div]:transition-opacity [&_*]:!rounded-none" class:translate-y-7={$showEditor}>
   <Progress {show} bind:progress bind:reset />
 </div>
+
+<Drop />
 
 <style>
   * {

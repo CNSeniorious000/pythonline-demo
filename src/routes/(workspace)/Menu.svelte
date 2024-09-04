@@ -2,6 +2,7 @@
   import type { WorkspaceInfo } from "$lib/cms/types";
 
   import { withProgress } from "./+layout.svelte";
+  import { requestDrop } from "./Drop.svelte";
   import Group from "./MenuGroup.svelte";
   import Item from "./MenuItem.svelte";
   import { sources } from "./store";
@@ -72,6 +73,10 @@
     }
   }
 
+  async function dropFiles() {
+    $sources = { ...$sources, ...await requestDrop() };
+  }
+
   $: canUpdate = $telegraphToken && $page.route.id === "/(workspace)/telegraph/[path]" && metadata?.own;
 </script>
 
@@ -89,6 +94,8 @@
     <Menubar.Separator class="my-1 h-1px w-full rounded-full bg-neutral-7" />
     <Item icon="i-carbon-new-tab" on:click={() => newModule(true)}>新建 py 模块（文件夹）</Item>
     <Item icon="i-carbon-new-tab" on:click={() => newModule()}>新建 py 模块（文件）</Item>
+    <Menubar.Separator class="my-1 h-1px w-full rounded-full bg-neutral-7" />
+    <Item icon="i-carbon-file-storage -translate-y-0.2" on:click={dropFiles}>选取本地文件（可拖拽）</Item>
   </Group>
 
   <Group title="项目">

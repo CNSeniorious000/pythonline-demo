@@ -15,7 +15,7 @@
   const dispatch = createEventDispatcher<{ collected: typeof pendingSources }>();
 </script>
 
-<div class="flex flex-col gap-3 sm:max-w-2/3">
+<div class="min-w-fit flex flex-col gap-3 sm:max-w-2/3">
 
   <h1 class="text-lg">从本地选择文件开始</h1>
 
