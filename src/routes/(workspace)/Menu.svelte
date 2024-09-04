@@ -2,6 +2,7 @@
   import type { WorkspaceInfo } from "$lib/cms/types";
 
   import { withProgress } from "./+layout.svelte";
+  import { newChat } from "./ChatWindow.svelte";
   import { requestDrop } from "./Drop.svelte";
   import Group from "./MenuGroup.svelte";
   import Item from "./MenuItem.svelte";
@@ -122,10 +123,10 @@
     <Item icon="i-carbon-interactive-segmentation-cursor" on:click={() => open("https://zh.promplate.dev/")}>Promplate 中文交互式文档</Item>
   </Group>
 
-  <Group title="自动化">
+  <Group title="生成式 AI">
     <Item icon="i-carbon-ai-generate" on:click={autoGenerateTitle} disabled={!canUpdate}>建议标题</Item>
     <Item icon="i-carbon-ai-generate" on:click={autoGenerateReadme}>生成自述文件</Item>
-    <Item icon="i-carbon-ai-generate" on:click={autoGenerateTitle} disabled>生成代码文件</Item>
+    <Item icon="i-carbon-chat-bot" on:click={newChat}>通用助手</Item>
   </Group>
 
 </Menubar.Root>
