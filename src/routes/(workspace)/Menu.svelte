@@ -5,13 +5,15 @@
   import Group from "./MenuGroup.svelte";
   import Item from "./MenuItem.svelte";
   import { sources } from "./store";
-  import { telegraphToken } from "./telegraph/store";
+  import { recents, telegraphToken } from "./telegraph/store";
   import { focusedFile } from "./Workspace.svelte";
   import { goto } from "$app/navigation";
   import { page } from "$app/stores";
   import { forkWorkspace, updateWorkspace } from "$lib/cms/telegraph";
   import { input } from "$lib/components/Input.svelte";
   import { Menubar } from "bits-ui";
+
+  $: metadata = $recents[$page.params.path];
 
   async function newFile() {
     const path = await input("文件路径，例如 a/b/c.py");
@@ -31,21 +33,23 @@
   }
 
   async function share() {
-    const [title, author] = await Promise.all([input("标题"), input("作者")]);
+    const [title = "untitled-project", author = "Anonymous"] = await Promise.all([input("标题", "untitled-project"), input("作者", "Anonymous")]);
     const payload: WorkspaceInfo = { sources: $sources, title, author };
     await withProgress((async () => {
       const { path, token } = await forkWorkspace(payload, $telegraphToken);
       token && telegraphToken.set(token);
       await goto(`/telegraph/${path}`);
+      metadata = { title, author, own: true };
+      $recents = { ...$recents, [path]: metadata };
     })());
   }
 
   async function update() {
-    const [title, author] = await Promise.all([input("标题"), input("作者")]);
+    const { title, author } = metadata;
     await withProgress(updateWorkspace({ title, author, sources: $sources, token: $telegraphToken! }));
   }
 
-  $: canUpdate = $telegraphToken && $page.route.id === "/(workspace)/telegraph/[path]";
+  $: canUpdate = $telegraphToken && $page.route.id === "/(workspace)/telegraph/[path]" && metadata.own;
 </script>
 
 <Menubar.Root class="h-full flex flex-row items-center">
@@ -72,6 +76,7 @@
   <Group title="导航">
     <Item icon="i-carbon-home -translate-y-0.2" on:click={() => goto("/")}>首页</Item>
     <Item icon="i-carbon-repo-source-code" on:click={() => goto("/playground")}>本站 Python 代码</Item>
+    <Item icon="i-carbon-time" on:click={() => goto("/recents")}>最近访问</Item>
     <Menubar.Separator class="my-1 h-1px w-full rounded-full bg-neutral-7" />
     <Item icon="i-carbon-link" on:click={() => open("https://py3.online/")}>英文站（较久）</Item>
     <Item icon="i-carbon-logo-github" on:click={() => open("https://github.com/promplate/pyth-on-line")}>开源仓库</Item>

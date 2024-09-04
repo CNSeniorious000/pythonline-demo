@@ -38,12 +38,12 @@ export async function updateWorkspace(payload: Payload) {
   toastMarkdown("保存成功", "success", id);
 }
 
-export async function loadWorkspace(path: string): Promise<WorkspaceInfo> {
+export async function loadWorkspace(path: string): Promise<WorkspaceInfo & { own: boolean }> {
   const url = `https://api.telegra.ph/getPage/${path}?return_content=true`;
   const res: TelegraphResponse<Page> = await fetch(url).then(r => r.json());
   if (!res.ok)
     throw new Error(res.error);
-  const { content, title, author_name } = res.result;
+  const { content, title, author_name, can_edit } = res.result;
   const sources = deserialize(content!);
-  return { sources, title, author: author_name! };
+  return { sources, title, author: author_name!, own: can_edit! };
 }
