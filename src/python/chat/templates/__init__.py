@@ -10,3 +10,5 @@ groundings = Template.read(here / "groundings.j2")
 components = {"ExplainError": explain_error, "Groundings": groundings}
 
 explain_error.context = groundings.context = components
+
+suggest = Template.read(here / "suggest.j2")

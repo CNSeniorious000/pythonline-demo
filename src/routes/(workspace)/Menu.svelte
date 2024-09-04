@@ -11,6 +11,7 @@
   import { page } from "$app/stores";
   import { forkWorkspace, updateWorkspace } from "$lib/cms/telegraph";
   import { input } from "$lib/components/Input.svelte";
+  import { suggestTitle } from "$lib/pyodide/api/suggest";
   import { Menubar } from "bits-ui";
 
   $: metadata = $recents[$page.params.path];
@@ -49,6 +50,12 @@
     const author = updateUser ? await input("作者", metadata.author) ?? metadata.author : metadata.author;
     await withProgress(updateWorkspace({ title, author, sources: $sources, token: $telegraphToken! }));
     await withProgress(invalidateAll());
+  }
+
+  async function autoGenerateTitle() {
+    const res = await withProgress(suggestTitle($sources));
+    const title = await input("请确认标题", res) ?? res;
+    await withProgress(updateWorkspace({ title, author: metadata.author, sources: $sources, token: $telegraphToken! }).then(invalidateAll));
   }
 
   $: canUpdate = $telegraphToken && $page.route.id === "/(workspace)/telegraph/[path]" && metadata?.own;
@@ -92,6 +99,12 @@
     <Item icon="i-carbon-information-square-filled" on:click={() => open("https://docs.py.promplate.dev/")}>Promplate 文档</Item>
     <Item icon="i-carbon-interactive-segmentation-cursor" on:click={() => open("https://promplate.dev/")}>Promplate 交互式文档</Item>
     <Item icon="i-carbon-interactive-segmentation-cursor" on:click={() => open("https://zh.promplate.dev/")}>Promplate 中文交互式文档</Item>
+  </Group>
+
+  <Group title="自动化">
+    <Item icon="i-carbon-ai-generate" on:click={autoGenerateTitle}>建议标题</Item>
+    <Item icon="i-carbon-ai-generate" on:click={autoGenerateTitle} disabled>生成自述文件</Item>
+    <Item icon="i-carbon-ai-generate" on:click={autoGenerateTitle} disabled>生成代码文件</Item>
   </Group>
 
 </Menubar.Root>
