@@ -1,8 +1,6 @@
-from .llm import generate
 from .templates import suggest
+from .utils.use_template import use_template
 
 
-async def suggest_title(sources: dict[str, str]):
-    async for i in generate(await suggest.arender({"sources": sources})):
-        assert isinstance(i, str)
-        yield i
+def suggest_title(sources: dict[str, str]):
+    return use_template(suggest, {"sources": sources})

@@ -11,7 +11,9 @@
   import { page } from "$app/stores";
   import { forkWorkspace, updateWorkspace } from "$lib/cms/telegraph";
   import { input } from "$lib/components/Input.svelte";
+  import { genReadme } from "$lib/pyodide/api/gen";
   import { suggestTitle } from "$lib/pyodide/api/suggest";
+  import { toastMarkdown } from "$lib/utils/toast";
   import { Menubar } from "bits-ui";
 
   $: metadata = $recents[$page.params.path];
@@ -58,6 +60,18 @@
     await withProgress(updateWorkspace({ title, author: metadata.author, sources: $sources, token: $telegraphToken! }).then(invalidateAll));
   }
 
+  async function autoGenerateReadme() {
+    if ($sources["README.md"])
+      return toastMarkdown("`README.md` 已存在", "warning");
+
+    $sources["README.md"] = "";
+    $focusedFile = "README.md";
+
+    for await (const content of genReadme($sources)) {
+      $sources["README.md"] = content;
+    }
+  }
+
   $: canUpdate = $telegraphToken && $page.route.id === "/(workspace)/telegraph/[path]" && metadata?.own;
 </script>
 
@@ -102,8 +116,8 @@
   </Group>
 
   <Group title="自动化">
-    <Item icon="i-carbon-ai-generate" on:click={autoGenerateTitle}>建议标题</Item>
-    <Item icon="i-carbon-ai-generate" on:click={autoGenerateTitle} disabled>生成自述文件</Item>
+    <Item icon="i-carbon-ai-generate" on:click={autoGenerateTitle} disabled={!canUpdate}>建议标题</Item>
+    <Item icon="i-carbon-ai-generate" on:click={autoGenerateReadme}>生成自述文件</Item>
     <Item icon="i-carbon-ai-generate" on:click={autoGenerateTitle} disabled>生成代码文件</Item>
   </Group>
 

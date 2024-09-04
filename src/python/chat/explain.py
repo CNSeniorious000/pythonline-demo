@@ -1,8 +1,6 @@
-from .llm import generate
 from .templates import explain_error
+from .utils.use_template import use_template
 
 
-async def explain(traceback: str, code: str):
-    async for i in generate(await explain_error.arender({"traceback": traceback, "code": code})):
-        assert isinstance(i, str)
-        yield i
+def explain(traceback: str, code: str):
+    return use_template(explain_error, {"traceback": traceback, "code": code})
