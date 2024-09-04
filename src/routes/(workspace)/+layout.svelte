@@ -87,9 +87,6 @@
       progress.set((ONE_THIRD + finished) / (ONE_THIRD + total), { soft: 1 });
     }
   }
-
-  $: console.log({ show });
-  $: console.log($tasks);
 </script>
 
 <slot />
