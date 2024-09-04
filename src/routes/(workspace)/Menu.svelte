@@ -6,11 +6,18 @@
   import Item from "./MenuItem.svelte";
   import { sources } from "./store";
   import { telegraphToken } from "./telegraph/store";
+  import { focusedFile } from "./Workspace.svelte";
   import { goto } from "$app/navigation";
   import { page } from "$app/stores";
   import { forkWorkspace, updateWorkspace } from "$lib/cms/telegraph";
   import { input } from "$lib/components/Input.svelte";
   import { Menubar } from "bits-ui";
+
+  async function newFile() {
+    const path = await input("文件路径");
+    $sources = { ...$sources, [path]: "" };
+    $focusedFile = path;
+  }
 
   async function share() {
     const [title, author] = await Promise.all([input("标题"), input("作者")]);
@@ -38,6 +45,10 @@
       <div class="i-iconamoon-arrow-left-1-bold group-not-hover:(translate-x-1.5 op-0)" />
     </div>
   </button>
+
+  <Group title="文件">
+    <Item icon="i-carbon-document-add -translate-y-0.2" on:click={newFile}>新建文件</Item>
+  </Group>
 
   <Group title="项目">
     <Item icon="i-carbon-save -translate-y-0.2" on:click={update} disabled={!canUpdate}>保存（更新）</Item>
