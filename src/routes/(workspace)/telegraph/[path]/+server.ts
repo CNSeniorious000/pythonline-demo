@@ -9,7 +9,7 @@ export interface Payload extends WorkspaceInfo {
   token: string;
 }
 
-export const PUT: RequestHandler = async ({ request, params: { path } }) => {
+export const PUT: RequestHandler = async ({ request, url, params: { path } }) => {
   const { token, sources, title, author }: Payload = await request.json();
 
   const client = new Telegraph(token!);
@@ -17,7 +17,7 @@ export const PUT: RequestHandler = async ({ request, params: { path } }) => {
   const content = serialize(sources);
 
   try {
-    await client.editPage(path, title, content, author, request.url);
+    await client.editPage(path, title, content, author, url.hostname !== "localhost" ? request.url : undefined);
     return new Response(null, { status: 204 });
   }
   catch (e) {

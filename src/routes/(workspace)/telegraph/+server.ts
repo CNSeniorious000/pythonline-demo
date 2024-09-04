@@ -22,7 +22,8 @@ export const PUT: RequestHandler = async ({ request, url }) => {
 
   try {
     const { path } = await client.createPage(title, content, author, "https://py3.online");
-    client.editPage(path, title, content, author, new URL(`/telegraph/${path}`, url).href).catch(console.error);
+    if (url.hostname !== "localhost")
+      client.editPage(path, title, content, author, new URL(`/telegraph/${path}`, url).href).catch(console.error);
     return json({ path, token: new_token }, { status: 201 });
   }
   catch (e) {
