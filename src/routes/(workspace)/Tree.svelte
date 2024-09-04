@@ -68,8 +68,9 @@
     $sources = rest;
   }
 
-  async function renameFile(path: string) {
-    const name = await input("重命名为");
+  async function renameFile(item: File) {
+    const path = getPath(item);
+    const name = await input("重命名为", item.name);
     if (name) {
       const { [path]: content, ...rest } = $sources;
       const target = `${parent}/${name}`.replace(/^\//, "");
@@ -98,7 +99,7 @@
             <div>{item.name}</div>
             <div class="absolute right-1 top-1/2 flex flex-row-reverse gap-1 text-neutral-4 transition group-not-hover:(pointer-events-none op-0) -translate-y-1/2 [&>button:hover]:text-neutral-3">
               <button on:click|stopPropagation={() => deleteFile(getPath(item))} class="i-carbon-trash-can" />
-              <button on:click|stopPropagation={() => renameFile(getPath(item))} class="i-carbon-edit" />
+              <button on:click|stopPropagation={() => renameFile(item)} class="i-carbon-edit" />
             </div>
           </button>
         {:else}
