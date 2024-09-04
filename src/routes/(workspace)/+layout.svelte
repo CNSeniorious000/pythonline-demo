@@ -57,6 +57,7 @@
   import { showEditor, sources } from "./store";
   import Workspace from "./Workspace.svelte";
   import { afterNavigate, beforeNavigate } from "$app/navigation";
+  import { currentConsole } from "$lib/components/console/store";
   import Progress from "$lib/components/Progress.svelte";
   import { onDestroy } from "svelte";
   import { cubicOut } from "svelte/easing";
@@ -64,6 +65,10 @@
 
   beforeNavigate(addTask);
   afterNavigate(finish);
+
+  afterNavigate(() => {
+    $currentConsole?.clear();
+  });
 
   onDestroy(() => {
     // @ts-ignore
