@@ -5,11 +5,12 @@
 
   import { Err, In, Out, Repr } from "./console";
   import HeadlessConsole from "./console/HeadlessConsole.svelte";
+  import { currentConsolePush } from "./console/store";
   import ConsolePrompt from "./ConsolePrompt.svelte";
   import Modal from "./Modal.svelte";
   import { pyodideReady } from "$lib/stores";
   import { patchSource, reformatInputSource } from "$lib/utils/formatSource";
-  import { onMount } from "svelte";
+  import { onDestroy, onMount } from "svelte";
 
   // eslint-disable-next-line no-undef-init
   export let container: HTMLElement | undefined = undefined;
@@ -47,6 +48,11 @@
   onMount(async () => {
     history.unshift(...(JSON.parse(localStorage.getItem("console-history") || "[]") as string[]));
     focusToInput();
+    $currentConsolePush = pushBlock;
+  });
+
+  onDestroy(() => {
+    $currentConsolePush = null;
   });
 
   $: if ($pyodideReady && pyConsole) {

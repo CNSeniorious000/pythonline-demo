@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { Code, Node } from "mdast";
 
+  import { currentConsolePush } from "../console/store";
   import UseCopy from "../console/UseCopy.svelte";
   import WithTooltip from "../reusable/WithTooltip.svelte";
 
@@ -28,6 +29,17 @@
       {#if runnable && run}
         <WithTooltip let:builder tips="运行">
           <button on:click={() => run(code.value)} {...builder} use:builder.action><div class="i-mingcute-play-fill" /></button>
+        </WithTooltip>
+      {/if}
+      {#if runnable && $currentConsolePush}
+        <WithTooltip let:builder tips="运行">
+          <button on:click={() => {
+            const source = code.value.trimEnd();
+            if (source.split("\n").at(-1)?.startsWith(" "))
+              $currentConsolePush(`${source}\n\n`);
+            else
+              $currentConsolePush(`${source}\n`);
+          }} {...builder} use:builder.action><div class="i-mdi-console" /></button>
         </WithTooltip>
       {/if}
     </div>
