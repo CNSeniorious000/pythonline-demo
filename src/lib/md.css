@@ -1,9 +1,21 @@
 .prose {
-  @apply font-260;
+  @apply font-275;
 }
 
 .prose :where(h1, h2, h3, h4, h5, h6) {
-  @apply my-1em text-1.1em text-white font-400;
+  @apply mb-0.5em mt-1em text-1.1em text-white font-400;
+}
+
+.prose h1 {
+  --uno: text-2.1em font-200;
+}
+
+.prose h2 {
+  --uno: text-1.7em font-250;
+}
+
+.prose h3 {
+  --uno: text-1.3em font-300;
 }
 
 .prose strong {
@@ -19,7 +31,7 @@
 }
 
 .prose code {
-  @apply mx-0.2 whitespace-normal rounded bg-white/10 px-1 py-0.2 text-0.8em text-white font-350 -my-0.2 -translate-y-0.1em after:content-none before:content-none;
+  @apply mx-0.2 whitespace-normal rounded bg-white/10 px-1 py-0.2 text-0.8em text-white font-normal -my-0.2 -translate-y-0.1em after:content-none before:content-none;
 }
 
 .prose a,
