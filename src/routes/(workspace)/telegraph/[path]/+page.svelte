@@ -1,11 +1,11 @@
 <script lang="ts">
-  import type { PageData } from "./$types";
+  import type { PageServerData } from "./$types";
 
   import { showEditor, sources } from "../../store";
   import { recents } from "../store";
   import { page } from "$app/stores";
 
-  export let data: PageData;
+  export let data: PageServerData;
 
   $sources = data.sources;
   $showEditor = true;
