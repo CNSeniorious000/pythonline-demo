@@ -9,7 +9,7 @@
   import FileList from "./FileList.svelte";
   import { registerCommandGroup } from "$lib/components/command/helper";
   import Console from "$lib/components/Console.svelte";
-  import SetupWorkspace from "$lib/components/reusable/WorkspaceLifecycle.svelte";
+  import SetupWorkspace, { currentWorkspace } from "$lib/components/reusable/WorkspaceLifecycle.svelte";
   import { toastMarkdown } from "$lib/utils/toast";
   import { Pane, PaneGroup, PaneResizer } from "paneforge";
 
@@ -35,6 +35,8 @@
   $: if ($focusedFile && !($focusedFile in sources)) {
     $focusedFile = undefined;
   }
+
+  $: $currentWorkspace?.sync(sources);
 </script>
 
 <div class="h-full">
@@ -47,13 +49,11 @@
     </PaneResizer>
     <Pane defaultSize={80} minSize={10}>
       <PaneGroup direction="vertical">
-        <SetupWorkspace {sources} let:save>
+        <SetupWorkspace {sources}>
           <Pane defaultSize={70} minSize={10} class="relative">
             {#if $focusedFile}
-              <FileContent on:save={({ detail: content }) => {
-                // @ts-ignore
-                save($focusedFile, content.replaceAll("\r\n", "\n"));
-                toastMarkdown(`\`${$focusedFile}\` 已保存`);
+              <FileContent on:save={() => {
+                toastMarkdown(`\`${$focusedFile}\` 已同步`);
               }} bind:content={sources[$focusedFile]} lang={$focusedFile.slice($focusedFile.lastIndexOf(".") + 1)} />
             {:else}
               <div class="grid h-full w-full place-items-center">
