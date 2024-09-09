@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@ethercorps/sveltekit-og": "^3.0.0",
-    "@fontsource-variable/fira-code": "^5.0.19",
+    "@fontsource-variable/fira-code": "^5.0.20",
     "@iconify/json": "^2.2.245",
     "@neodrag/svelte": "^2.0.6",
     "@shikijs/monaco": "^1.16.2",
