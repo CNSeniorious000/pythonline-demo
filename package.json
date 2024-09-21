@@ -34,7 +34,7 @@
     "misans-vf": "^1.0.0",
     "monaco-editor-core": "^0.51.0",
     "openai": "^4.63.0",
-    "paneforge": "^0.0.5",
+    "paneforge": "^0.0.6",
     "pyodide": "0.26.2",
     "rehype-parse": "^9.0.0",
     "rehype-remark": "^10.0.0",
