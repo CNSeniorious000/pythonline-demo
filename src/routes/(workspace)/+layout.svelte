@@ -99,12 +99,12 @@
 
 <slot />
 
-<div class="h-8" class:-translate-y-8={!$showEditor}>
+<div class="fixed top-0 h-8 w-full" class:-translate-y-8={!$showEditor}>
   <Menu />
 </div>
 
 {#if $showEditor}
-  <div class="h-[calc(100vh-2rem)]" in:fade={{ delay: 100, easing: cubicOut }} out:fly={{ y: -5, duration: 150 }}>
+  <div class="fixed top-8 h-[calc(100vh-2rem)] w-full" in:fade={{ delay: 100, easing: cubicOut }} out:fly={{ y: -5, duration: 150 }}>
     <Workspace bind:sources={$sources} />
   </div>
 {/if}
