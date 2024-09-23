@@ -1,9 +1,9 @@
 .prose {
-  @apply font-275;
+  @apply font-300;
 }
 
 .prose :where(h1, h2, h3, h4, h5, h6) {
-  @apply mb-0.5em mt-1em text-1.1em text-white font-400;
+  @apply mb-0.5em mt-1em text-1.1em text-white font-450;
 }
 
 .prose h1 {
@@ -19,7 +19,7 @@
 }
 
 .prose strong {
-  @apply text-white font-400;
+  @apply text-white font-450;
 }
 
 .prose pre {
@@ -36,7 +36,7 @@
 
 .prose a,
 .prose a code {
-  @apply font-280 underline underline-(white op-30 offset-2) transition;
+  @apply font-400 underline underline-(white op-30 offset-2) transition;
 }
 
 .prose a:hover,
@@ -53,7 +53,7 @@
 }
 
 .prose th {
-  @apply font-400;
+  @apply font-450;
 }
 
 .prose tr {
