@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/pyodide/:version/:path*",
+      "destination": "https://cdn.jsdelivr.net/pyodide/:version/full/:path*"
+    },
+    {
+      "source": "/packages/:path*",
+      "destination": "https://files.pythonhosted.org/packages/:path*"
+    }
+  ]
+}
