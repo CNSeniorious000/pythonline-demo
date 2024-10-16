@@ -23,7 +23,7 @@
   }
 </script>
 
-<Dialog.Root openFocus={() => ref} bind:open portal={null} closeOnEscape={false} closeOnOutsideClick={false}>
+<Dialog.Root openFocus={() => ref} bind:open portal={null} closeOnEscape={false} closeOnOutsideClick={false} preventScroll={false}>
   <div style:z-index={++count} class="pointer-events-none fixed left-0 right-0 top-30vh grid place-items-center text-neutral-2 [&>*]:pointer-events-auto">
 
     <Dialog.Overlay asChild let:builder>
