@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { AutoComplete, Item, Status } from "./console/HeadlessConsole.svelte";
+  import type { ConfigModule } from "$py/common/config";
   import type { ConsoleAPI } from "$py/console/console";
   import type { ClipboardEventHandler, KeyboardEventHandler } from "svelte/elements";
 
@@ -8,6 +9,7 @@
   import { currentConsolePush } from "./console/store";
   import ConsolePrompt from "./ConsolePrompt.svelte";
   import Modal from "./Modal.svelte";
+  import getPy from "$lib/pyodide";
   import { pyodideReady } from "$lib/stores";
   import { patchSource, reformatInputSource } from "$lib/utils/formatSource";
   import { onDestroy, onMount } from "svelte";
@@ -55,12 +57,23 @@
     $currentConsolePush = null;
   });
 
-  $: if ($pyodideReady && pyConsole) {
+  async function runStartupScripts() {
+    const py = await getPy();
+    const configModule: ConfigModule = py.pyimport("common.config");
+    const [preRun, run] = configModule.get_scripts();
+    if (preRun) {
+      await py.runPythonAsync(preRun, { globals: pyConsole.context });
+    }
+    if (run) {
+      await pushBlock(run);
+    }
     if (location.hash) {
       const source = atob(decodeURIComponent(location.hash.slice(1)));
       pushBlock(source);
     }
   }
+
+  $: $pyodideReady && pyConsole && runStartupScripts();
 
   async function pushMany(lines: string[], wait = true, hidden = false, finallySetInput = "") {
     let promise: Promise<any> | null = null;
