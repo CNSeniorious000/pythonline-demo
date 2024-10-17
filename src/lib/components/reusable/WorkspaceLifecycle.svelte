@@ -27,4 +27,4 @@
   });
 </script>
 
-<slot sync={workspace?.sync} save={workspace?.save} />
+<slot {workspace} />

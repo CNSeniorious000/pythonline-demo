@@ -12,6 +12,7 @@
   import SetupWorkspace, { currentWorkspace } from "$lib/components/reusable/WorkspaceLifecycle.svelte";
   import { toastMarkdown } from "$lib/utils/toast";
   import { Pane, PaneGroup, PaneResizer } from "paneforge";
+  import { fade } from "svelte/transition";
 
   export let sources: Record<string, string> = {};
 
@@ -49,7 +50,7 @@
     </PaneResizer>
     <Pane defaultSize={80} minSize={10}>
       <PaneGroup direction="vertical">
-        <SetupWorkspace {sources}>
+        <SetupWorkspace {sources} let:workspace>
           <Pane defaultSize={70} minSize={10} class="relative">
             {#if $focusedFile}
               <FileContent on:save={() => {
@@ -65,8 +66,18 @@
             <div class="my-1 h-0.11em w-full bg-white/10 transition group-active:bg-current group-hover:bg-white/30" />
           </PaneResizer>
           <Pane defaultSize={30} minSize={10}>
-            <div class="h-full w-full overflow-y-scroll" bind:this={container}>
-              <Console class="p-2 text-xs [&>div:hover]:rounded-r-none @2xl:(text-13px line-height-18px) @7xl:text-sm" {container} />
+            <div class="relative h-full w-full overflow-y-scroll" bind:this={container}>
+              {#if workspace}
+                <Console class="p-2 text-xs [&>div:hover]:rounded-r-none @2xl:(text-13px line-height-18px) @7xl:text-sm" {container} />
+              {:else}
+                <div class="absolute inset-0 grid place-items-center">
+                  <div class="flex flex-row items-center gap-2 op-80" out:fade>
+                    <div class="i-svg-spinners-90-ring-with-bg" />
+                    <div class="text-sm tracking-wide">初始化工作区</div>
+                  </div>
+                </div>
+
+              {/if}
             </div>
           </Pane>
         </SetupWorkspace>
