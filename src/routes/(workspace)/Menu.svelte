@@ -2,7 +2,6 @@
   import type { WorkspaceInfo } from "$lib/cms/types";
 
   import { withProgress } from "./+layout.svelte";
-  import { newChat } from "./ChatWindow.svelte";
   import { requestDrop } from "./Drop.svelte";
   import Group from "./MenuGroup.svelte";
   import Item from "./MenuItem.svelte";
@@ -12,6 +11,7 @@
   import { goto, invalidateAll } from "$app/navigation";
   import { page } from "$app/stores";
   import { forkWorkspace, updateWorkspace } from "$lib/cms/telegraph";
+  import { newChat } from "$lib/components/ChatWindow.svelte";
   import { input } from "$lib/components/Input.svelte";
   import { genReadme } from "$lib/pyodide/api/gen";
   import { suggestTitle } from "$lib/pyodide/api/suggest";

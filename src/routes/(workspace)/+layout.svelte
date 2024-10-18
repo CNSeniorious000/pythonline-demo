@@ -54,7 +54,6 @@
 </script>
 
 <script lang="ts">
-  import ChatWindow from "./ChatWindow.svelte";
   import Menu from "./Menu.svelte";
   import { showEditor, sources } from "./store";
   import Workspace from "./Workspace.svelte";
@@ -114,8 +113,6 @@
 </div>
 
 <Drop />
-
-<ChatWindow />
 
 <style>
   * {
