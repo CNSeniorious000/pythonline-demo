@@ -97,9 +97,11 @@
           <button data-file class="group" style:--depth="{depth + 0.8}em" class:!bg-neutral-8={focusedFile === getPath(item)} on:click={() => (focusedFile = getPath(item))}>
             <div class={getFileIcon(item)} />
             <div>{item.name}</div>
-            <div class="absolute right-1 top-1/2 flex flex-row-reverse gap-1 text-neutral-4 transition group-not-hover:(pointer-events-none op-0) -translate-y-1/2 [&>button:hover]:text-neutral-3">
-              <button on:click|stopPropagation={() => deleteFile(getPath(item))} class="i-carbon-trash-can" />
-              <button on:click|stopPropagation={() => renameFile(item)} class="i-carbon-edit" />
+            <div class="absolute right-1 top-1/2 flex flex-row-reverse gap-1 text-neutral-4 transition group-not-hover:(pointer-events-none op-0) -translate-y-1/2 [&>div:hover]:text-neutral-3">
+              <!-- svelte-ignore a11y-interactive-supports-focus a11y-click-events-have-key-events -->
+              <div role="button" on:click|stopPropagation={() => deleteFile(getPath(item))} class="i-carbon-trash-can" />
+              <!-- svelte-ignore a11y-interactive-supports-focus a11y-click-events-have-key-events -->
+              <div role="button" on:click|stopPropagation={() => renameFile(item)} class="i-carbon-edit" />
             </div>
           </button>
         {:else}
