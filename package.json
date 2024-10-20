@@ -20,7 +20,7 @@
     "@fontsource-variable/fira-code": "^5.1.0",
     "@iconify/json": "^2.2.261",
     "@neodrag/svelte": "^2.0.6",
-    "@promplate/pyodide-bootstrap": "0.26.2",
+    "@promplate/pyodide-bootstrap": "0.26.3",
     "@shikijs/monaco": "^1.22.0",
     "@shikijs/rehype": "^1.22.0",
     "@sveltejs/adapter-auto": "^3.2.5",
@@ -67,7 +67,7 @@
     "eslint": "^9.13.0",
     "eslint-plugin-format": "^0.1.2",
     "eslint-plugin-svelte": "^2.45.1",
-    "pyodide": "0.26.2",
+    "pyodide": "0.26.3",
     "svelte-check": "^4.0.5"
   }
 }
