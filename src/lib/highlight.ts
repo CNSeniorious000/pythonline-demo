@@ -1,7 +1,7 @@
-import type { ShikiTransformer } from "shiki";
+import type { ShikiTransformer } from "shiki/bundle/web";
 
 import { cacheGlobally } from "./utils/cache";
-import { bundledLanguages, createHighlighter } from "shiki";
+import { bundledLanguages, createHighlighter } from "shiki/bundle/web";
 
 export const languages = Object.keys(bundledLanguages);
 
