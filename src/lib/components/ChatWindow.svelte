@@ -13,6 +13,6 @@
 
 {#each $conversations as i (i)}
   <div class="pointer-events-none fixed inset-0 grid place-items-center [&>*]:pointer-events-auto">
-    <Chat close={() => [$conversations = $conversations.filter(index => (index !== i)), close()]} />
+    <Chat close={() => $conversations = $conversations.filter(index => (index !== i))} />
   </div>
 {/each}
