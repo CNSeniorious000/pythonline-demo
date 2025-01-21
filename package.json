@@ -18,11 +18,11 @@
   "dependencies": {
     "@ethercorps/sveltekit-og": "^3.0.0",
     "@fontsource-variable/fira-code": "^5.1.1",
-    "@iconify/json": "^2.2.297",
+    "@iconify/json": "^2.2.298",
     "@neodrag/svelte": "^2.3.0",
     "@promplate/pyodide-bootstrap": "0.26.3",
-    "@shikijs/monaco": "^1.27.2",
-    "@shikijs/rehype": "^1.27.2",
+    "@shikijs/monaco": "^1.29.1",
+    "@shikijs/rehype": "^1.29.1",
     "@sveltejs/adapter-auto": "^3.3.1",
     "@sveltejs/kit": "^2.16.0",
     "@sveltejs/vite-plugin-svelte": "^3.1.2",
@@ -45,7 +45,7 @@
     "remark-rehype": "^11.1.1",
     "remark-stringify": "^11.0.0",
     "rollup-plugin-flatten-dir": "^1.0.1",
-    "shiki": "^1.27.2",
+    "shiki": "^1.29.1",
     "svelte": "^4.2.19",
     "svelte-file-dropzone": "^2.0.9",
     "svelte-persisted-store": "^0.11.0",
@@ -57,7 +57,7 @@
     "unified": "^11.0.5",
     "unocss": "^0.62.4",
     "unzipit": "^1.4.3",
-    "vite": "^5.4.11"
+    "vite": "^5.4.13"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^3.14.0",
