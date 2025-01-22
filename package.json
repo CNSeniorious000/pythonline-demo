@@ -24,7 +24,7 @@
     "@shikijs/monaco": "^1.29.1",
     "@shikijs/rehype": "^1.29.1",
     "@sveltejs/adapter-auto": "^3.3.1",
-    "@sveltejs/kit": "^2.16.0",
+    "@sveltejs/kit": "^2.16.1",
     "@sveltejs/vite-plugin-svelte": "^3.1.2",
     "@unocss/extractor-svelte": "^0.62.4",
     "@unocss/reset": "^0.62.4",
@@ -35,7 +35,7 @@
     "htmlparser2": "^9.1.0",
     "misans-vf": "^1.0.0",
     "monaco-editor-core": "^0.52.2",
-    "openai": "^4.79.1",
+    "openai": "^4.79.4",
     "paneforge": "^0.0.6",
     "rehype-parse": "^9.0.1",
     "rehype-remark": "^10.0.0",
@@ -57,10 +57,10 @@
     "unified": "^11.0.5",
     "unocss": "^0.62.4",
     "unzipit": "^1.4.3",
-    "vite": "^5.4.13"
+    "vite": "^5.4.14"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^3.14.0",
+    "@antfu/eslint-config": "^3.15.0",
     "@types/mdast": "^4.0.4",
     "@types/turndown": "^5.0.5",
     "@unocss/eslint-config": "^0.62.4",
