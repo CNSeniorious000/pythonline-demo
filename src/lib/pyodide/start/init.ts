@@ -4,15 +4,17 @@ import common from "../../../python/common";
 import { indexURL, preloadPackages } from "../common";
 import loader from "./loader.py?raw";
 import { dev } from "$app/environment";
+import { input } from "$lib/components/Input.svelte";
 import { cacheSingleton } from "$lib/utils/cache";
 import { getEnv } from "$lib/utils/env";
 import { withToast } from "$lib/utils/toast";
 import { toast } from "svelte-sonner";
 
 const getMinimalPyodide = cacheSingleton(withToast({ loading: "加载 Pyodide 运行时" })(async () => {
-  const { loadPyodide } = await import("pyodide");
+  const { loadPyodide } = await import("@promplate/pyodide-bootstrap");
   const py = await loadPyodide({ indexURL, env: getEnv(), packages: preloadPackages, args: dev ? [] : ["-O"] });
   py.globals.set("toast", toast);
+  py.globals.set("async_input", (prompt: string) => input(prompt) ?? "");
   return py;
 }));
 
