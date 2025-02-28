@@ -18,7 +18,7 @@
   "dependencies": {
     "@ethercorps/sveltekit-og": "^3.0.0",
     "@fontsource-variable/fira-code": "^5.1.1",
-    "@iconify/json": "^2.2.310",
+    "@iconify/json": "^2.2.311",
     "@neodrag/svelte": "^2.3.1",
     "@promplate/pyodide-bootstrap": "0.26.3",
     "@shikijs/monaco": "^1.29.2",
@@ -35,7 +35,7 @@
     "htmlparser2": "^9.1.0",
     "misans-vf": "^1.0.0",
     "monaco-editor-core": "^0.52.2",
-    "openai": "^4.85.4",
+    "openai": "^4.86.1",
     "paneforge": "^0.0.6",
     "rehype-parse": "^9.0.1",
     "rehype-remark": "^10.0.0",
