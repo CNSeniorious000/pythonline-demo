@@ -15,6 +15,10 @@ export function withToast(data: { loading: string; success?: string; duration?: 
   };
 }
 
-export function toastMarkdown(markdown: string, type: "message" | "success" | "info" | "warning" | "error" = "success") {
-  toast[type](BaseMarkdown, { componentProps: { text: markdown } });
+let index = 0;
+
+export function toastMarkdown(markdown: string, type: "message" | "success" | "info" | "warning" | "error" | "loading" = "success", id = index++) {
+  // @ts-expect-error promise option is not in the type definition
+  toast[type](BaseMarkdown, { componentProps: { text: markdown }, id, promise: true });
+  return id;
 }
