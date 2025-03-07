@@ -18,7 +18,7 @@
   "dependencies": {
     "@ethercorps/sveltekit-og": "^3.0.0",
     "@fontsource-variable/fira-code": "^5.2.5",
-    "@iconify/json": "^2.2.313",
+    "@iconify/json": "^2.2.314",
     "@neodrag/svelte": "^2.3.1",
     "@promplate/pyodide-bootstrap": "0.26.3",
     "@shikijs/monaco": "^1.29.2",
@@ -68,6 +68,6 @@
     "eslint-plugin-format": "^0.1.3",
     "eslint-plugin-svelte": "^2.46.1",
     "pyodide": "0.26.3",
-    "svelte-check": "^4.1.4"
+    "svelte-check": "^4.1.5"
   }
 }
