@@ -1,0 +1,10 @@
+from src.literal_dict import *
+d = DictBuilder()
+
+a = 1
+b = "abc"
+c = range(10)
+
+d[a, b, c, d]
+
+print(type(_))
