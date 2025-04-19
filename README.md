@@ -65,6 +65,16 @@ async def f(url):
 await gather(*(f(".") for _ in range(10)))
 ```
 
+标准输入输出流也是支持的：
+
+```python
+from sys import stdout, stderr
+
+stdout.write("Hello world from stdout!")
+stderr.write("Hello world from stderr!")
+"你输入了：" + input("请输入")
+```
+
 > 此项目目前仍在活跃开发中，如果你有任何反馈或建议，请随时[联系我们](https://github.com/promplate/pyth-on-line/discussions)，不胜感激！
 
 ## 致谢
