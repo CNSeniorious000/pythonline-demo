@@ -50,7 +50,7 @@
     "svelte-file-dropzone": "^2.0.9",
     "svelte-persisted-store": "^0.11.0",
     "svelte-portal": "^2.2.1",
-    "svelte-sonner": "0.3.27",
+    "svelte-sonner": "1.0.1",
     "telegra.ph": "^1.0.1",
     "turndown": "^7.2.0",
     "turndown-plugin-gfm": "^1.0.2",
