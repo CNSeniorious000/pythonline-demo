@@ -1,6 +1,6 @@
 # This is a stub file for global variables provided by the js side of pyodide.
 
-from collections.abc import Callable
+from collections.abc import Awaitable, Callable
 from typing import Literal, TypeVar
 
 Function = TypeVar("Function", bound=Callable)
@@ -13,4 +13,6 @@ class Toast[Id]:
 
 toast: Toast[str]
 
-__all__ = ["toast"]
+async_input: Callable[[str], Awaitable[str]]
+
+__all__ = ["toast", "async_input"]
