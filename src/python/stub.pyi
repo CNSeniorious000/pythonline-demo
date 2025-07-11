@@ -15,4 +15,4 @@ toast: Toast[str]
 
 async_input: Callable[[str], Awaitable[str]]
 
-__all__ = ["toast", "async_input"]
+__all__ = ["async_input", "toast"]
