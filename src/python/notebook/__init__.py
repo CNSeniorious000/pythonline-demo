@@ -47,4 +47,4 @@ class NotebookAPI:
         return False
 
     def inject_globals(self, context):
-        self.context = {**context, **self.context}
+        self.context |= {**context, **self.context}
