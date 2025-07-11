@@ -1,5 +1,5 @@
-import { version } from "@promplate/pyodide-bootstrap/version";
 import * as env from "$env/static/public";
+import { version } from "pyodide/package.json";
 
 // eslint-disable-next-line ts/ban-ts-comment
 // @ts-ignore
