@@ -17,6 +17,7 @@ class NotebookAPI:
         self.builtins = ReactiveNamespace(builtins.__dict__)
         self.context = ReactiveNamespace({"__builtins__": self.builtins, "__name__": "__main__", "__doc__": None, "__package__": None, "__loader__": None, "__spec__": None})
         self.counter = count(1)
+        self.console_context = {}
 
     @property
     def filename(self):
@@ -33,7 +34,7 @@ class NotebookAPI:
                 self.builtins["_"] = value
 
     def inspect(self, name: str):
-        return to_js(inspect(name, self.context, self.builtins))
+        return to_js(inspect(name, self.context, self.console_context, self.builtins))
 
     def watch(self, name: str, callback: Callable):
         effect = create_effect(lambda: callback(self.inspect(name)))
@@ -48,3 +49,4 @@ class NotebookAPI:
 
     def inject_globals(self, context):
         self.context |= {**context, **self.context}
+        self.console_context = context
