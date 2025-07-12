@@ -1,15 +1,25 @@
 <script lang="ts">
   import type { AutoComplete, Item, Status } from "./console/HeadlessConsole.svelte";
+  import type { ConfigModule } from "$py/common/config";
   import type { ConsoleAPI } from "$py/console/console";
   import type { ClipboardEventHandler, KeyboardEventHandler } from "svelte/elements";
 
+  import { sources } from "../../routes/(workspace)/store";
+  import { focusedFile } from "../../routes/(workspace)/Workspace.svelte";
   import { Err, In, Out, Repr } from "./console";
   import HeadlessConsole from "./console/HeadlessConsole.svelte";
+  import { currentConsolePush } from "./console/store";
+  import ConsoleAction from "./ConsoleAction.svelte";
   import ConsolePrompt from "./ConsolePrompt.svelte";
   import Modal from "./Modal.svelte";
+  import { currentWorkspace } from "./reusable/WorkspaceLifecycle.svelte";
+  import { goto } from "$app/navigation";
+  import { newChat } from "$lib/components/ChatWindow.svelte";
+  import getPy from "$lib/pyodide";
   import { pyodideReady } from "$lib/stores";
   import { patchSource, reformatInputSource } from "$lib/utils/formatSource";
-  import { onMount } from "svelte";
+  import { onDestroy, onMount } from "svelte";
+  import { fly } from "svelte/transition";
 
   // eslint-disable-next-line no-undef-init
   export let container: HTMLElement | undefined = undefined;
@@ -47,14 +57,30 @@
   onMount(async () => {
     history.unshift(...(JSON.parse(localStorage.getItem("console-history") || "[]") as string[]));
     focusToInput();
+    $currentConsolePush = pushBlock;
   });
 
-  $: if ($pyodideReady && pyConsole) {
+  onDestroy(() => {
+    $currentConsolePush = null;
+  });
+
+  async function runStartupScripts() {
+    const py = await getPy();
+    const configModule: ConfigModule = py.pyimport("common.config");
+    const [preRun, run] = configModule.get_scripts();
+    if (preRun) {
+      await py.runPythonAsync(preRun, { globals: pyConsole.context });
+    }
+    if (run) {
+      await pushBlock(run);
+    }
     if (location.hash) {
       const source = atob(decodeURIComponent(location.hash.slice(1)));
       pushBlock(source);
     }
   }
+
+  $: $pyodideReady && pyConsole && runStartupScripts();
 
   async function pushMany(lines: string[], wait = true, hidden = false, finallySetInput = "") {
     let promise: Promise<any> | null = null;
@@ -225,8 +251,26 @@
 
 {#await import("./ErrorExplainer.svelte") then { default: ErrorExplainer }}
   <Modal let:close show={!!focusedError} cleanup={() => (focusedError = undefined)}>
-    <ErrorExplainer errorInfo={focusedError} {close} {pushBlock} {pyConsole} />
+    <ErrorExplainer errorInfo={focusedError} {close} />
   </Modal>
 {/await}
 
 <slot {ready} />
+
+<div role="toolbar" in:fly={{ y: 10 }} class="fixed bottom-4 right-4 flex flex-row rounded-full bg-neutral-8/70 p-0.3em text-lg transition-all <sm:(right-1/2 translate-x-1/2 text-base)">
+  {#if $currentWorkspace}
+    <ConsoleAction on:click={runStartupScripts} tips="重新运行启动命令" icon="i-mingcute-refresh-anticlockwise-1-line" />
+  {/if}
+  <ConsoleAction
+    on:click={async () => {
+      const source = log.map(({ text, type }) => (type === "in" ? text : "")).join("\n");
+      await goto("/new");
+      $sources = { "main.py": source };
+      $focusedFile = "main.py";
+    }}
+    tips="创建新项目"
+    icon="i-mingcute-add-circle-line"
+  />
+  <ConsoleAction on:click={newChat} tips="与 AI 对话" icon="i-mingcute-ai-line" />
+  <ConsoleAction tips="检查工具" icon="i-mingcute-inspect-line" />
+</div>
