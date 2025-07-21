@@ -18,7 +18,7 @@
   "dependencies": {
     "@ethercorps/sveltekit-og": "^3.0.0",
     "@fontsource-variable/fira-code": "^5.2.6",
-    "@iconify/json": "^2.2.359",
+    "@iconify/json": "^2.2.360",
     "@neodrag/svelte": "^2.3.3",
     "@shikijs/monaco": "^3.8.1",
     "@shikijs/rehype": "^3.8.1",
@@ -28,7 +28,7 @@
     "@unocss/extractor-svelte": "^66.3.3",
     "@unocss/reset": "^66.3.3",
     "bits-ui": "^0.22.0",
-    "cheerio": "^1.1.0",
+    "cheerio": "^1.1.1",
     "cmdk-sv": "^0.0.19",
     "dayjs": "^1.11.13",
     "htmlparser2": "^10.0.0",
