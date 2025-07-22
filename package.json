@@ -28,7 +28,7 @@
     "@unocss/extractor-svelte": "^66.3.3",
     "@unocss/reset": "^66.3.3",
     "bits-ui": "^0.22.0",
-    "cheerio": "^1.1.1",
+    "cheerio": "^1.1.2",
     "cmdk-sv": "^0.0.19",
     "dayjs": "^1.11.13",
     "htmlparser2": "^10.0.0",
