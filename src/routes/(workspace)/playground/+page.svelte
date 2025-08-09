@@ -1,6 +1,7 @@
 <script lang="ts">
   import files from "../../../python";
-  import Workspace from "../Workspace.svelte";
-</script>
+  import { showEditor, sources } from "../store";
 
-<Workspace sources={files} />
+  $sources = files;
+  $showEditor = true;
+</script>
