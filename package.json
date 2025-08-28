@@ -30,7 +30,7 @@
     "bits-ui": "^0.22.0",
     "cheerio": "^1.1.2",
     "cmdk-sv": "^0.0.19",
-    "dayjs": "^1.11.13",
+    "dayjs": "^1.11.14",
     "htmlparser2": "^10.0.0",
     "misans-vf": "^1.0.0",
     "monaco-editor-core": "^0.52.2",
