@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { showEditor } from "../store";
+  import literalDictExample from "./literal-dict.example.txt?raw";
   import { beforeNavigate } from "$app/navigation";
   import Intro from "$lib/components/Intro.svelte";
   import { canLogin, login } from "$lib/oauth";
@@ -7,6 +9,8 @@
 
   let input = "";
   let ref: HTMLInputElement;
+
+  $showEditor = false;
 
   $: valid = input.split("/").length === 2 && !input.endsWith("/") && !input.startsWith("/");
 
@@ -28,9 +32,9 @@
       <div class="i-tabler-building-lighthouse text-lg text-yellow" />
       我们的提示工程框架
     </a>
-    <a href="/github/pyodide/micropip" in:fly|global={{ duration: 500, x: -5, delay: 300 }}>
+    <a href="/github/CNSeniorious000/literal-dict#{btoa(literalDictExample)}" in:fly|global={{ duration: 500, x: -5, delay: 300 }}>
       <div class="i-tabler-brand-python text-lg text-blue" />
-      pyodide/micropip
+      <span class="font-mono">CNSeniorious000/literal-dict</span>
     </a>
     <a href="/github/{input}" class="w-fit" class:cursor-text={!valid} on:click={e => !valid && ([e.preventDefault(), ref.focus()])} in:fly|global={{ duration: 500, x: 5, delay: 500 }}>
       <div class="i-tabler-brand-github text-lg text-zinc-4 transition-color" class:text-zinc-1={valid} />

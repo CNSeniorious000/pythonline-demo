@@ -5,6 +5,8 @@
 <script lang="ts">
   import type { File, Folder, Tree } from "$lib/utils/list2tree";
 
+  import { sources } from "./store";
+  import { input } from "$lib/components/Input.svelte";
   import { slide } from "svelte/transition";
 
   export let folder: Folder;
@@ -60,11 +62,27 @@
         return "i-catppuccin-file";
     }
   }
+
+  function deleteFile(path: string) {
+    const { [path]: _, ...rest } = $sources;
+    $sources = rest;
+  }
+
+  async function renameFile(item: File) {
+    const path = getPath(item);
+    const name = await input("重命名为", item.name);
+    if (name) {
+      const { [path]: content, ...rest } = $sources;
+      const target = `${parent}/${name}`.replace(/^\//, "");
+      $sources = { ...rest, [target]: content };
+      focusedFile = target;
+    }
+  }
 </script>
 
 <section data-container>
   {#if parent !== ""}
-    <button style:--depth="{depth - 1 + 0.8}em" on:click={() => collapse = !collapse}>
+    <button data-folder style:--depth="{depth - 1 + 0.8}em" on:click={() => collapse = !collapse}>
       <div class={collapse ? "i-catppuccin-folder" : "i-catppuccin-folder-open"} />
       <div>{parent.split("/").at(-1)}</div>
     </button>
@@ -76,9 +94,15 @@
 
       {#each tree as item}
         {#if item.type === "file"}
-          <button style:--depth="{depth + 0.8}em" class:!bg-neutral-8={focusedFile === getPath(item)} on:click={() => (focusedFile = getPath(item))}>
+          <button data-file class="group" style:--depth="{depth + 0.8}em" class:!bg-neutral-8={focusedFile === getPath(item)} on:click={() => (focusedFile = getPath(item))}>
             <div class={getFileIcon(item)} />
             <div>{item.name}</div>
+            <div class="absolute right-1 top-1/2 flex flex-row-reverse gap-1 text-neutral-4 transition group-not-hover:(pointer-events-none op-0) -translate-y-1/2 [&>div:hover]:text-neutral-3">
+              <!-- svelte-ignore a11y-interactive-supports-focus a11y-click-events-have-key-events -->
+              <div role="button" on:click|stopPropagation={() => deleteFile(getPath(item))} class="i-carbon-trash-can" />
+              <!-- svelte-ignore a11y-interactive-supports-focus a11y-click-events-have-key-events -->
+              <div role="button" on:click|stopPropagation={() => renameFile(item)} class="i-carbon-edit" />
+            </div>
           </button>
         {:else}
           <svelte:self folder={item} parent={getPath(item)} depth={depth + 1} bind:focusedFile />
@@ -95,8 +119,8 @@
     --uno: flex flex-col text-ellipsis ws-nowrap;
   }
 
-  button {
-    --uno: w-full flex shrink-0 flex-row items-center gap-1.4 overflow-x-hidden rounded-r-sm py-0.6 pl-$depth pr-1 text-left text-xs text-neutral-1/95 font-mono transition-background-color duration-100 active:bg-neutral-8/70 hover:bg-neutral-8/50;
+  button:where([data-file], [data-folder]) {
+    --uno: relative w-full flex shrink-0 flex-row items-center gap-1.4 overflow-x-hidden rounded-r-sm py-0.6 pl-$depth pr-1 text-left text-xs text-neutral-1/95 font-mono transition-background-color duration-100 active:bg-neutral-8/70 hover:bg-neutral-8/50;
   }
 
   div {

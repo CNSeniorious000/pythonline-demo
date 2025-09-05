@@ -5,6 +5,7 @@ from tempfile import TemporaryDirectory
 from typing import TYPE_CHECKING
 
 from js import console
+from pyodide.ffi import JsProxy
 
 if TYPE_CHECKING:
     from ...lib.pyodide.start.loader import setup_module
@@ -31,7 +32,8 @@ class WorkspaceAPI:
         self.directory.cleanup()
         sys.path.remove(self.directory.name)
 
-    def sync(self, sources: dict[str, str], reload=True):
+    def sync(self, js_sources: JsProxy, reload=True):
+        sources: dict[str, str] = js_sources.to_py()
         base = self.directory.name
 
         for path in self.files:
@@ -42,13 +44,19 @@ class WorkspaceAPI:
 
         if reload:
             for path, content in sources.items():
-                if Path(base, path).read_text() != content:
+                file = Path(base, path)
+                if not file.exists() or file.read_text() != content:
                     unload(path2module(path))
 
         setup_module(sources, base_path=Path(base))
+        self.files = list(sources)
 
     def save(self, path: str, content: str, reload=True):
         file = Path(self.directory.name, path)
+        if not file.exists():
+            file.write_text(content)
+            return
+
         if file.read_text() != content:
             if reload:
                 unload(path2module(path))

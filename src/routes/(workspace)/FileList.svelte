@@ -16,6 +16,10 @@
 <div class="relative h-full select-none gap-1 overflow-y-scroll">
   <h2 class="sticky top-0 bg-gradient-(from-neutral-9/0 to-neutral-9/80 to-t) pb-1 pl-2 pt-2 text-sm tracking-wide">{title}</h2>
   <div class="pb-1.5 font-normal">
-    <Tree folder={root} bind:focusedFile />
+    {#if files.length}
+      <Tree folder={root} bind:focusedFile />
+    {:else}
+      <div class="grid place-items-center text-xs text-neutral-6 font-300">目前是空的</div>
+    {/if}
   </div>
 </div>

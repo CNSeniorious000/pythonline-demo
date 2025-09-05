@@ -7,7 +7,9 @@
   import { dev } from "$app/environment";
   import { page } from "$app/stores";
   import * as env from "$env/static/public";
+  import ChatWindow from "$lib/components/ChatWindow.svelte";
   import CmdK from "$lib/components/command/CmdK.svelte";
+  import Inputer from "$lib/components/Input.svelte";
   import { Toaster } from "svelte-sonner";
 
   // @ts-ignore
@@ -46,9 +48,13 @@
 
 <Toaster theme="dark" toastOptions={{ class: "text-xs font-mono" }} />
 
+<Inputer />
+
 <slot />
 
 <CmdK />
+
+<ChatWindow />
 
 <style>
   :global(html) {
@@ -73,5 +79,9 @@
 
   :global(body *)::-webkit-scrollbar {
     --uno: hidden;
+  }
+
+  :global(*:not(input):focus-visible) {
+    --uno: outline-none ring-(1.2 neutral-5);
   }
 </style>
