@@ -14,4 +14,5 @@ export class NotebookAPI extends PyProxy {
   inspect(source: string): Inspection;
   watch(name: string, callback: (name: Inspection) => any): () => void;
   is_python(source: string): boolean;
+  inject_globals(context: PyProxy): void;
 }

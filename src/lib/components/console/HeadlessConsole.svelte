@@ -13,6 +13,7 @@
 <script lang="ts">
   import type { ConsoleAPI } from "$py/console/console";
 
+  import { currentConsole } from "./store";
   import WithConsoleCommands from "./WithConsoleCommands.svelte";
   import getPy from "$lib/pyodide";
   import { needScroll, scrollToBottom } from "$lib/utils/scroll";
@@ -35,11 +36,13 @@
   onMount(async () => {
     const py = await getPy({ console: true });
     pyConsole = (py.pyimport("console.console")).ConsoleAPI((syncLog));
+    $currentConsole = pyConsole;
     complete = pyConsole.complete;
     ready = true;
   });
 
   onDestroy(() => {
+    $currentConsole = null;
     pyConsole?.close();
     pyConsole?.destroy();
   });

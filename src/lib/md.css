@@ -3,7 +3,19 @@
 }
 
 .prose :where(h1, h2, h3, h4, h5, h6) {
-  @apply my-1em text-1.1em text-white font-450;
+  @apply mb-0.5em mt-1em text-1.1em text-white font-450;
+}
+
+.prose h1 {
+  --uno: text-2.1em font-200;
+}
+
+.prose h2 {
+  --uno: text-1.7em font-250;
+}
+
+.prose h3 {
+  --uno: text-1.3em font-300;
 }
 
 .prose strong {

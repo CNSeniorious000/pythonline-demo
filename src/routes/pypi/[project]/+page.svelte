@@ -33,21 +33,3 @@
   </main>
 
 </div>
-
-<style>
-  main :global(article) {
-    --uno: sm:text-base;
-  }
-  main :global(:where(h1, h2, h3)) {
-    --uno: mb-0.5em;
-  }
-  main :global(h1) {
-    --uno: text-2.1em font-200;
-  }
-  main :global(h2) {
-    --uno: text-1.7em font-250;
-  }
-  main :global(h3) {
-    --uno: text-1.3em font-300;
-  }
-</style>

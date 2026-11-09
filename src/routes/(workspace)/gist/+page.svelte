@@ -1,12 +1,15 @@
 <script lang="ts">
   import type { PageData } from "./$types";
 
+  import { showEditor } from "../store";
   import GitHubUser from "$lib/components/GitHubUser.svelte";
   import { fromNow } from "$lib/date";
 
   export let data: PageData;
 
   const { avatarUrl, name, login, total, gists } = data;
+
+  $showEditor = false;
 </script>
 
 <div class="m-4 flex flex-col gap-3 sm:m-3vw sm:gap-4">

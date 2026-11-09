@@ -1,11 +1,10 @@
 <script lang="ts">
   import type { PageServerData } from "./$types";
 
-  import Workspace from "../../../Workspace.svelte";
+  import { showEditor, sources } from "../../../store";
 
   export let data: PageServerData;
 
-  const { sources } = data;
+  $sources = data.sources;
+  $showEditor = true;
 </script>
-
-<Workspace {sources} />

@@ -1,4 +1,4 @@
-import type { BuiltinLanguage } from "shiki";
+import type { BundledLanguage } from "shiki/bundle/web";
 
 import { cacheGlobally } from "./utils/cache";
 import rehypeShiki from "@shikijs/rehype";
@@ -7,11 +7,11 @@ import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import { unified } from "unified";
 
-async function getProcessor(langs: BuiltinLanguage[] = []) {
+async function getProcessor(langs: BundledLanguage[] = []) {
   return unified().use(remarkParse).use(remarkRehype).use(rehypeShiki, { theme: "vitesse-dark", langs }).use(rehypeStringify);
 }
 
-export async function renderMarkdown(text: string, langs: BuiltinLanguage[] = []) {
+export async function renderMarkdown(text: string, langs: BundledLanguage[] = []) {
   const processor = await cacheGlobally(`md-${langs.join()}`, getProcessor.bind(null, langs))();
   const { value } = await processor.process(text);
   return value as string;
