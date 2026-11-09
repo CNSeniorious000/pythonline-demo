@@ -23,8 +23,8 @@
     "@shikijs/monaco": "^3.12.2",
     "@shikijs/rehype": "^3.12.2",
     "@sveltejs/adapter-auto": "^6.1.0",
-    "@sveltejs/kit": "^2.37.0",
-    "@sveltejs/vite-plugin-svelte": "^3.1.2",
+    "@sveltejs/kit": "^2.70.4",
+    "@sveltejs/vite-plugin-svelte": "^5.1.1",
     "@unocss/extractor-svelte": "^66.5.0",
     "@unocss/reset": "^66.5.0",
     "bits-ui": "^0.22.0",
@@ -46,7 +46,7 @@
     "remark-stringify": "^11.0.0",
     "rollup-plugin-flatten-dir": "^1.0.1",
     "shiki": "^3.12.2",
-    "svelte": "^4.2.20",
+    "svelte": "^5.57.3",
     "svelte-file-dropzone": "^2.0.9",
     "svelte-persisted-store": "^0.12.0",
     "svelte-portal": "^2.2.1",
@@ -57,7 +57,7 @@
     "unified": "^11.0.5",
     "unocss": "^66.5.0",
     "unzipit": "^1.4.3",
-    "vite": "^5.4.19"
+    "vite": "^6.4.6"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^4.19.0",
